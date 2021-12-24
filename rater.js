@@ -9,6 +9,7 @@ roundmax = 0
 stagecount = 1
 stagemax = 0
 tourname = ""
+players = new Object
 
 function rate(tid, callback){
     tourid = tid
