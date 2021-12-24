@@ -1,0 +1,22 @@
+table, td, th {
+    border: 1px solid black;
+  }
+
+table {
+    border-collapse: collapse;
+}
+
+main, h1, table, p {
+    margin: auto;
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+tr.header {
+    background-color: lightgray;
+}
