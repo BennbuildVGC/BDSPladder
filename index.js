@@ -3,7 +3,7 @@ const url = require("url");
 const http = require("http");
 const fs = require("fs")
 
-const port = 3000;
+const port = 80;
 const app = express();
 app.use(express.static(__dirname + "/client", {extensions:['html']}));
 
