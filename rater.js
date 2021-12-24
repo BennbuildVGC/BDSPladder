@@ -3,7 +3,6 @@ const request = require("sync-request")
 const fs = require('fs')
 const e = require("express")
 const tours = require("./tours.json")
-const players = require("./players.json")
 
 roundcount = 1
 roundmax = 0
