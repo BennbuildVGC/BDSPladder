@@ -1,4 +1,5 @@
 const express = require("express");
+const favicon = require('serve-favicon');
 const url = require("url");
 const http = require("http");
 const fs = require("fs")
@@ -6,6 +7,8 @@ const fs = require("fs")
 const port = 80;
 const app = express();
 app.use(express.static(__dirname + "/client", {extensions:['html']}));
+app.use(favicon(__dirname + '/favicon.ico'));
+
 
 app.get("/players", function(req, res){
     fs.readFile('players.json', (err, data) => {
