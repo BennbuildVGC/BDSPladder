@@ -107,7 +107,7 @@ function rateplayers(pid, opid, won, pname, opname){
 
 function rateind(rating, orating, win){
     r1 = 10 ** (prating / 400)
-    r2 = 10 ** (oprating / 400)
+    r2 = 10 ** (orating / 400)
     e1 = r1 / (r1 + r2)
     s1 = win ? 1 : 0;
     if(rating >= 1600){
