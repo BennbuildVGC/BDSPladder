@@ -48,7 +48,6 @@ function sort(players, format){
         result.push(bestplayer)
         delete players[bestindex]
     }
-    console.log(result)
     return result
 }
 
