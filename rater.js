@@ -50,7 +50,7 @@ function rounds(body){
                 players[id].results.push("<td>" + tourformat + "</td><td>" + tourname + "</td><td><strong>1st</strong></td>")
             }
             else if(x == 2){
-                players[id].results.push("<td>" + tourformat + "</td><td>" + tourname + "</td><td><strong>1st</strong></td>")
+                players[id].results.push("<td>" + tourformat + "</td><td>" + tourname + "</td><td><strong>2nd</strong></td>")
             }
             else{
                 n = Math.pow(2,Math.ceil(Math.log(x)/Math.log(2)))
