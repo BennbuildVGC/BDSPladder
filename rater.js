@@ -54,7 +54,7 @@ function rounds(body){
             }
             else{
                 n = Math.pow(2,Math.ceil(Math.log(x)/Math.log(2)))
-                players[id].results.push(tourname + ": <strong>Top"+ n + "</strong>")
+                players[id].results.push(tourname + ": <strong>Top "+ n + "</strong>")
             }
         }
     }
@@ -83,6 +83,7 @@ function rateplayers(pid, opid, won, pname, opname){
         }
     }
     prating = players[pid][tourformat + "rating"]
+    players[pid].name = pname;
     if(!(opid in players)){
         players[opid] = {
             name : opname,
@@ -95,6 +96,7 @@ function rateplayers(pid, opid, won, pname, opname){
         }
     }
     oprating = players[opid][tourformat + "rating"]
+    players[opid].name = opname;
     players[pid][tourformat + "rating"] = rateind(prating, oprating, won)
     players[opid][tourformat + "rating"] = rateind(oprating, prating, !won)
     /**
