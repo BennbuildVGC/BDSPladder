@@ -3,12 +3,14 @@ const request = require("sync-request")
 const fs = require('fs')
 const e = require("express")
 const tours = require("./tours.json")
+const formats = require("./formats.json")
 
 roundcount = 1
 roundmax = 0
 stagecount = 1
 stagemax = 0
 tourname = ""
+tourformat = ""
 players = new Object
 
 function rate(tid, callback){
@@ -39,6 +41,23 @@ function rounds(body){
         matches(fites)
         roundcount++;
     }
+    if(stagecount == stagemax){
+        standings = JSON.parse((request("GET", apiurl + "stages/" + currentstage + "/standings")).getBody())
+        for(s of standings){
+            x = s.place
+            id = s.team.userID
+            if(x == 1){
+                players[id].results.push(tourname + ": <strong>1st</strong>")
+            }
+            else if(x == 2){
+                players[id].results.push(tourname + ": <strong>2nd</strong>")
+            }
+            else{
+                n = Math.pow(2,Math.ceil(Math.log(x)/Math.log(2)))
+                players[id].results.push(tourname + ": <strong>Top"+ n + "</strong>")
+            }
+        }
+    }
 }
 
 function matches(body){
@@ -55,25 +74,30 @@ function rateplayers(pid, opid, won, pname, opname){
     if(!(pid in players)){
         players[pid] = {
             name : pname,
-            rating : 1000,
-            results : [],
-            wins : 0,
-            losses : 0
+            results : []
+        }
+        for(f of formats){
+            players[pid][f + "rating"] = 1000
+            players[pid][f + "wins"] = 0
+            players[pid][f + "losses"] = 0
         }
     }
-    prating = players[pid].rating;
+    prating = players[pid][tourformat + "rating"]
     if(!(opid in players)){
         players[opid] = {
             name : opname,
-            rating : 1000,
-            results : [],
-            wins : 0,
-            losses : 0
+            results : []
+        }
+        for(f of formats){
+            players[opid][f + "rating"] = 1000
+            players[opid][f + "wins"] = 0
+            players[opid][f + "losses"] = 0
         }
     }
-    oprating = players[opid].rating;
-    players[pid].rating = rateind(prating, oprating, won)
-    players[opid].rating = rateind(oprating, prating, !won)
+    oprating = players[opid][tourformat + "rating"]
+    players[pid][tourformat + "rating"] = rateind(prating, oprating, won)
+    players[opid][tourformat + "rating"] = rateind(oprating, prating, !won)
+    /**
     if(stagecount == stagemax){
         if(roundcount == roundmax){
             if(won){
@@ -94,14 +118,14 @@ function rateplayers(pid, opid, won, pname, opname){
             }
         }
     }
-
+    */
     if(won){
-        players[pid].wins++;
-        players[opid].losses++;
+        players[pid][tourformat + "wins"]++;
+        players[opid][tourformat + "losses"]++;
     }
     else{
-        players[opid].wins++;
-        players[pid].losses++;
+        players[opid][tourformat + "wins"]++;
+        players[pid][tourformat + "losses"]++;
     }
 }
 
@@ -134,9 +158,12 @@ function rateind(rating, orating, win){
     }
 
 }
-
-for(tour of tours){
-    rate(tour);
+for(format of formats){
+    tourformat = format
+    for(tour of tours[tourformat]){
+        rate(tour);
+    }
 }
+
 fs.writeFileSync("players.json", JSON.stringify(players))
 
