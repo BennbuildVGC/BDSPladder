@@ -27,9 +27,8 @@ function fillInfo(player){
     }
     else{
         for(let i = 0; i < player.results.length; i++){
-            let li = document.createElement("li");
-            li.innerHTML = player.results[i];
-            resultlist.appendChild(li);
+            let row = resultlist.insertRow()
+            row.innerHTML = player.results[i];
         }
     }
 }

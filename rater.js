@@ -47,14 +47,14 @@ function rounds(body){
             x = s.place
             id = s.team.userID
             if(x == 1){
-                players[id].results.push(tourname + ": <strong>1st</strong>")
+                players[id].results.push("<td>" + tourformat + "</td><td>" + tourname + "</td><td><strong>1st</strong></td>")
             }
             else if(x == 2){
-                players[id].results.push(tourname + ": <strong>2nd</strong>")
+                players[id].results.push("<td>" + tourformat + "</td><td>" + tourname + "</td><td><strong>1st</strong></td>")
             }
             else{
                 n = Math.pow(2,Math.ceil(Math.log(x)/Math.log(2)))
-                players[id].results.push(tourname + ": <strong>Top "+ n + "</strong>")
+                players[id].results.push("<td>" + tourformat + "</td><td>" + tourname + "</td><td><strong>Top " + n + "</strong></td>")
             }
         }
     }
